@@ -38,14 +38,22 @@
 		}
 
 		function prueba () {
-			barcodeDetector
-			.detect(imageEl)
-			.then((barcodes) => {
-			barcodes.forEach((barcode) => alert(barcode.rawValue));
-			})
-			.catch((err) => {
-			alert(err);
-			});
+
+			try {
+				barcodeDetector
+				.detect(imageEl)
+				.then((barcodes) => {
+				barcodes.forEach((barcode) => alert(barcode.rawValue));
+				})
+				.catch((err) => {
+				alert(err);
+				});
+			}
+			catch (ev) {
+				alert(ev);
+			}
+
+
 		}
 
 		document.body.addEventListener("keypress", (e) => keyControl(e));
