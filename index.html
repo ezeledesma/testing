@@ -11,6 +11,8 @@
 
 	<input type="file" accept="image/*" capture="camera" />
 	
+	<input type="button" value="" onclick="prueba()">
+
 	<script>
 
 		// check compatibility
@@ -22,12 +24,28 @@
 			const barcodeDetector = new BarcodeDetector({
 				formats: ["code_39", "codabar", "ean_13"],
 			});
+
+			// check supported types
+			BarcodeDetector.getSupportedFormats().then((supportedFormats) => {
+			supportedFormats.forEach((format) => alert(format));
+			});
 		}
 
 		function keyControl () {
 			if(!KeyboardEvent.ctrlKey) {
 				document.getElementById("campo").focus();
 			}
+		}
+
+		function prueba () {
+			barcodeDetector
+			.detect(imageEl)
+			.then((barcodes) => {
+			barcodes.forEach((barcode) => alert(barcode.rawValue));
+			})
+			.catch((err) => {
+			alert(err);
+			});
 		}
 
 		document.body.addEventListener("keypress", (e) => keyControl(e));
