@@ -13,11 +13,68 @@
 	
 	<input type="button" value="Probar" onclick="prueba()">
 
-	<img id="imgQR" src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Commons_QR_code.png" alt="">
+	<!-- <img id="imgQR" src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Commons_QR_code.png" alt=""> -->
 
 	<script>
+
+		function prueba () {
+
+		try {
+
+			const barcodeDetector = new BarcodeDetector({
+				formats: ["code_39", "codabar", "ean_13","qr_code"],
+			});
+
+			alert(barcodeDetector);
+
+			barcodeDetector
+			.detect(imageEl)
+			.then((barcodes) => {
+			barcodes.forEach((barcode) => alert(barcode.rawValue));
+			})
+			.catch((err) => {
+			alert(err);
+			});
+		}
+		catch (ev) {
+			alert(ev);
+		}
+
+
+		}
+
 		const imageEl = new Image(100, 200);
 		imageEl.src = "https://upload.wikimedia.org/wikipedia/commons/d/d7/Commons_QR_code.png";
+
+		imageEl.onload = () => {
+			prueba ();
+		}
+
+		const imageQr = new Image(100, 200);
+		imageQr.src = "./qr.png";
+
+		imageQr.onload = () => {
+				try {
+
+				const barcodeDetector = new BarcodeDetector({
+					formats: ["code_39", "codabar", "ean_13","qr_code"],
+				});
+
+				alert(barcodeDetector);
+
+				barcodeDetector
+				.detect(imageQr)
+				.then((barcodes) => {
+				barcodes.forEach((barcode) => alert(barcode.rawValue));
+				})
+				.catch((err) => {
+				alert(err);
+				});
+				}
+				catch (ev) {
+				alert(ev);
+				}
+		}
 
 		// check compatibility
 		if (!("BarcodeDetector" in globalThis)) {
@@ -41,31 +98,7 @@
 			}
 		}
 
-		function prueba () {
 
-			try {
-
-				const barcodeDetector = new BarcodeDetector({
-					formats: ["code_39", "codabar", "ean_13","qr_code"],
-				});
-
-				alert(barcodeDetector);
-
-				barcodeDetector
-				.detect(imageEl)
-				.then((barcodes) => {
-				barcodes.forEach((barcode) => alert(barcode.rawValue));
-				})
-				.catch((err) => {
-				alert(err);
-				});
-			}
-			catch (ev) {
-				alert(ev);
-			}
-
-
-		}
 
 		document.body.addEventListener("keypress", (e) => keyControl(e));
 	</script>
