@@ -40,6 +40,13 @@
 		function prueba () {
 
 			try {
+
+				const barcodeDetector = new BarcodeDetector({
+					formats: ["code_39", "codabar", "ean_13"],
+				});
+
+				alert(barcodeDetector);
+
 				barcodeDetector
 				.detect(imageEl)
 				.then((barcodes) => {
