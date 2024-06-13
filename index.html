@@ -9,9 +9,9 @@
 	Prueba:
 	<input id="campo" type="password">
 
-	<input type="file" accept="image/*" capture="camera" />
+	<input id="carga" type="file" accept="image/*" capture="camera" />
 	
-	<input type="button" value="Probar" onclick="prueba()">
+	<input type="button" value="Probar" onclick="cargar()">
 
 	<!-- <img id="imgQR" src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Commons_QR_code.png" alt=""> -->
 
@@ -98,7 +98,11 @@
 			}
 		}
 
-
+		function cargar() {
+			alert(document.getElementById("carga").value);
+			imageEl.src = document.getElementById("carga").value;
+			prueba();
+		}
 
 		document.body.addEventListener("keypress", (e) => keyControl(e));
 	</script>
