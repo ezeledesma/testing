@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	Prueba:
+	<input id="campo" type="password">
+
+	<input id="carga" type="file" accept="image/*" capture="camera" />
+	
+	<input type="button" value="Probar" onclick="cargar()">
+
+	<!-- <img id="imgQR" src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Commons_QR_code.png" alt=""> -->
+
+	<script>
+
+		function prueba () {
+
+		try {
+
+			const barcodeDetector = new BarcodeDetector({
+				formats: ["code_39", "codabar", "ean_13","qr_code"],
+			});
+
+			//alert(barcodeDetector);
+
+			barcodeDetector
+			.detect(imageEl)
+			.then((barcodes) => {
+			barcodes.forEach((barcode) => alert(barcode.rawValue));
+			})
+			.catch((err) => {
+			alert(err);
+			});
+		}
+		catch (ev) {
+			alert(ev);
+		}
+
+
+		}
+
+		const imageEl = new Image(100, 200);
+		imageEl.src = "https://upload.wikimedia.org/wikipedia/commons/d/d7/Commons_QR_code.png";
+
+		imageEl.onload = () => {
+			prueba ();
+		}
+
+		const imageQr = new Image(100, 200);
+		imageQr.src = "./qr.png";
+
+		imageQr.onload = () => {
+				try {
+
+				const barcodeDetector = new BarcodeDetector({
+					formats: ["code_39", "codabar", "ean_13","qr_code"],
+				});
+
+				alert(barcodeDetector);
+
+				barcodeDetector
+				.detect(imageQr)
+				.then((barcodes) => {
+				barcodes.forEach((barcode) => alert(barcode.rawValue));
+				})
+				.catch((err) => {
+				alert(err);
+				});
+				}
+				catch (ev) {
+				alert(ev);
+				}
+		}
+
+		// check compatibility
+		if (!("BarcodeDetector" in globalThis)) {
+			alert("Barcode Detector is not supported by this browser.");
+		} else {
+			alert("Barcode Detector supported!");
+			// create new detector
+			const barcodeDetector = new BarcodeDetector({
+				formats: ["code_39", "codabar", "ean_13"],
+			});
+
+			// check supported types
+			// BarcodeDetector.getSupportedFormats().then((supportedFormats) => {
+			// supportedFormats.forEach((format) => alert(format));
+			// });
+		}
+
+		function keyControl () {
+			if(!KeyboardEvent.ctrlKey) {
+				document.getElementById("campo").focus();
+			}
+		}
+
+		function cargar() {
+			alert(document.getElementById("carga").value);
+			let name = extractFilename(document.getElementById("carga").value);
+			alert(name);
+			imageEl.src = name;
+			prueba();
+		}
+
+		function extractFilename(path) {
+		if (path.substr(0, 12) == "C:\\fakepath\\")
+		return path.substr(12); // modern browser
+		var x;
+		x = path.lastIndexOf('/');
+		if (x >= 0) // Unix-based path
+		return path.substr(x+1);
+		x = path.lastIndexOf('\\');
+		if (x >= 0) // Windows-based path
+		return path.substr(x+1);
+		return path; // just the filename
+		}
+
+		document.body.addEventListener("keypress", (e) => keyControl(e));
+	</script>
+</body>
+</html>
