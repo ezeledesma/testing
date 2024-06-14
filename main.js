@@ -46,4 +46,4 @@ const detectCode = () => {
 
 
 // Run detect code function every 100 milliseconds
-setInterval(detectCode, 100);
+//setInterval(detectCode, 100);
