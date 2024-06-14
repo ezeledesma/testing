@@ -39,6 +39,7 @@
 
 	// Detect code function 
 	const detectCode = () => {
+	try {
 	// Start detecting codes on to the video element
 	barcodeDetector.detect(video).then(codes => {
 	// If no codes exit function
@@ -52,6 +53,9 @@
 	// Log an error if one happens
 	alert(err);
 	})
+	}
+	catch {
+		console.log("video no iniciado");
 	}
 
 	// Run detect code function every 100 milliseconds
